@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Repository\CategoryRepository;
 use App\Repository\LivreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -74,6 +74,22 @@ class Livre
     public function setEditeur(string $Editeur): static
     {
         $this->Editeur = $Editeur;
+
+        return $this;
+    }
+
+    
+
+    private $category;
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
