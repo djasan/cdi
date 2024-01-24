@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LivreRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,19 @@ class Livre
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Category $category = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Emprunt::class, mappedBy="livre")
+     */
+    private Collection $emprunts;
+
+    // Nouvelles caractéristiques
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private ?\DateTimeImmutable $dateRetour = null;
+
+    // ... (autres méthodes et propriétés)
 
     public function getId(): ?int
     {
@@ -100,6 +114,17 @@ class Livre
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+        return $this;
+    }
+
+    public function getDateRetour(): ?\DateTimeImmutable
+    {
+        return $this->dateRetour;
+    }
+
+    public function setDateRetour(?\DateTimeImmutable $dateRetour): self
+    {
+        $this->dateRetour = $dateRetour;
         return $this;
     }
 }
