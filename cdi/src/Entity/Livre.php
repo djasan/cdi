@@ -1,29 +1,47 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\CategoryRepository;
+
 use App\Repository\LivreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LivreRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=LivreRepository::class)
+ */
 class Livre
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column
+     */
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(length=255)
+     */
     private ?string $Image = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(length=255)
+     */
     private ?string $Auteur = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(length=255)
+     */
     private ?string $Titre = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(length=255)
+     */
     private ?string $Editeur = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="livres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -35,10 +53,9 @@ class Livre
         return $this->Image;
     }
 
-    public function setImage(string $Image): static
+    public function setImage(string $Image): self
     {
         $this->Image = $Image;
-
         return $this;
     }
 
@@ -47,10 +64,9 @@ class Livre
         return $this->Auteur;
     }
 
-    public function setAuteur(string $Auteur): static
+    public function setAuteur(string $Auteur): self
     {
         $this->Auteur = $Auteur;
-
         return $this;
     }
 
@@ -59,10 +75,9 @@ class Livre
         return $this->Titre;
     }
 
-    public function setTitre(string $Titre): static
+    public function setTitre(string $Titre): self
     {
         $this->Titre = $Titre;
-
         return $this;
     }
 
@@ -71,26 +86,20 @@ class Livre
         return $this->Editeur;
     }
 
-    public function setEditeur(string $Editeur): static
+    public function setEditeur(string $Editeur): self
     {
         $this->Editeur = $Editeur;
-
         return $this;
     }
-
-    
-
-    private $category;
 
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(Category $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
         return $this;
     }
 }
